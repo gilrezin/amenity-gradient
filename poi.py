@@ -78,5 +78,8 @@ pois_columns = ["multipolygon"]
 
 merged_data = merge_parcels_and_pois(parcels_csv, pois_csv, parcels_columns, pois_columns)
 nearest_pois = find_nearest_poi(merged_data) # tiebreaker function
+nearest_pois["rel_landvalue"] = nearest_pois["assessland"] / nearest_pois["lotarea"].dropna().str.replace(",", "").astype(int)
 
+nearest_pois.plot(x="distance_ft", y="rel_landvalue", kind="scatter", color="blue")
+plt.show()
 print(nearest_pois)
